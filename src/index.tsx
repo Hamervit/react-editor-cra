@@ -1,19 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from "react-dom/client";
+// import { AppContainer } from "react-hot-loader";
+// import { LocaleProvider } from "antd";
+// import koKR from "antd/lib/locale-provider/ko_KR";
+// import enUS from "antd/lib/locale-provider/en_US";
+import App from "./App.tsx";
+// import { register } from "./serviceWorker";
+// import i18next from "i18next";
+import { i18nClient } from "./EditorRG/i18n";
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+// const antResources = {
+//     ko: koKR,
+//     "ko-KR": koKR,
+//     en: enUS,
+//     "en-US": enUS,
+// };
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const root = document.createElement("div");
+root.id = "root";
+document.body.appendChild(root);
+
+const render = (Component: any) => {
+    ReactDOM.createRoot(document.getElementById("root")).render(
+        // // <AppContainer>
+        //     {/* <LocaleProvider locale={antResources[i18next.language]}> */}
+        <Component />
+        //     {/* </LocaleProvider> */}
+        // {/* </AppContainer> */}
+    );
+};
+
+i18nClient();
+
+render(App);

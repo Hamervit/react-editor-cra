@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Component } from "react";
+import Title from "./EditorRG/components/layout/Title";
+import FlowContainer from "./EditorRG/containers/FlowContainer";
+import { ImageMapEditor } from "./EditorRG/editors";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+type EditorType = "imagemap" | "workflow" | "flow" | "hexgrid" | "fiber";
+
+interface IState {
+  activeEditor: EditorType;
+}
+
+class App extends Component<any, IState> {
+  state: IState = {
+    activeEditor: "imagemap",
+  };
+
+  handleChangeEditor = ({ key }: any) => {
+    this.setState({
+      activeEditor: key,
+    });
+  };
+
+  renderEditor = (activeEditor: EditorType) => {
+    switch (activeEditor) {
+      case "imagemap":
+        return <ImageMapEditor />;
+    }
+  };
+
+  render() {
+    const { activeEditor } = this.state;
+    return (
+      <div className="rde-main">
+        <div className="rde-title">
+          <Title currentEditor={activeEditor} />
+        </div>
+        <FlowContainer>
+          <div className="rde-content">{this.renderEditor(activeEditor)}</div>
+        </FlowContainer>
+      </div>
+    );
+  }
 }
 
 export default App;
